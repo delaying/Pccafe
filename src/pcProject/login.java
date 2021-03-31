@@ -1,20 +1,18 @@
 package pcProject;
 
-import com.sun.jdi.Method;
-
 import java.util.Scanner;
 
-public class login extends Thread {
+public class Login extends Thread {
     public void run(){
-        System.out.println("아이디 : ");
+        System.out.print("아이디 : ");
         Scanner idscan = new Scanner(System.in);
         String userid = idscan.nextLine();
 
-        System.out.println("비밀번호 : ");
+        System.out.print("비밀번호 : ");
         Scanner pwscan = new Scanner(System.in);
         String userpw = pwscan.nextLine();
 
-        Thread loginthread = new login();
+        Thread loginthread = new Login();
 
         if (userid.equals(User.m1.UserID)){
             if(userpw.equals(User.m1.UserPassword))

@@ -38,34 +38,88 @@
 
 package pcProject;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class PRP {
     public static void main(String[] args) {
-        System.out.println("PRP");
-        System.out.println("지역을 입력하세요.");
+        System.out.println("PRP 시스템에 접속하셨습니다.");
 
+        System.out.println();
+        for(String area : PCcafe.area) {
+            System.out.println(area);
+        }
+
+        System.out.print("원하시는 지역의 번호를 입력하세요.");
         Scanner scanner = new Scanner(System.in);
-        String n = scanner.nextLine();
+        int n = scanner.nextInt();
 
-        if((PCcafe.bob.region).equals(n)){
-            System.out.println("피시방 이름 : " + PCcafe.bob.name +"\n"+"현재 좌석 현황 : "+PCcafe.bob.seat);
+        switch (n){
+            case 1 :
+                System.out.println();
+                for(String Seoul : PCcafe.SeoulPc) {
+                    System.out.println(Seoul);
+                }
+                break;
+            case 2 :
+                System.out.println();
+                for(String Gyeonggi : PCcafe.GyeonggiPc) {
+                    System.out.println(Gyeonggi);
+                }
+                break;
+            case 3 :
+                System.out.println();
+                for(String Daejeon : PCcafe.DaejeonPc) {
+                    System.out.println(Daejeon);
+                }
+                break;
+            case 4 :
+                System.out.println();
+                for(String Chungcheong : PCcafe.ChungcheongPc) {
+                    System.out.println(Chungcheong);
+                }
+                break;
+
+            default:
+                System.out.println();
+                for(String Chungcheong : PCcafe.ChungcheongPc) {
+                    System.out.println(Chungcheong);
+                }
+                break;
         }
-        System.out.println("현재 선택하신 피시방을 예약하시겠습니까?(yes/no)");
-        Scanner scanner1 = new Scanner(System.in);
+
+        System.out.print("원하시는 PC방의 번호를 입력하세요.");
+        int n1 = scanner.nextInt();
+        scanner.nextLine();
+        n1 = n1-1;
+
+        System.out.println("\n");
+
+        String savepc = PCcafe.areaPcname[n1];
+        PCcafe pCcafe = PCcafe.getPCcafe(savepc);
+
+
+        Thread loginthread = new Login();
+        System.out.print("현재 선택하신 피시방을 예약하시겠습니까?(yes/no)");
         String ans = scanner.nextLine();
-        String yes = "yes";
+        System.out.println("\n");
 
-        Thread loginthread = new login();
 
-        if(ans.equals(yes)) {
-            System.out.println("로그인을 해야합니다.");
-            loginthread.start();
+        switch (ans){
+            case "yes":
+                System.out.println("로그인을 해야합니다.");
+                loginthread.start(); //로그인객체생성시실행, while문 사용
+                break;
+            case "no":
+                System.out.print("지역을 입력하세요. ");
+                break;
+            default:
+                System.out.println("잘못 입력하셨습니다. ");
+
         }
-        else
-            System.out.println("지역을 입력하세요. ");
 
-        loginthread.interrupt();
+        //loginthread.interrupt();
 
     }
 }
