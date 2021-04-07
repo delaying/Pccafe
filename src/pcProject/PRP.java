@@ -33,7 +33,7 @@
 
         3.2 이전으로 돌아가서 다른 피시방 선택
         (1) 이전 키 누를시 다른 지역 선택가능
-        */
+ */
 
 
 package pcProject;
@@ -46,8 +46,37 @@ public class PRP {
     public static void main(String[] args) {
         System.out.println("PRP 시스템에 접속하셨습니다.");
 
+        String ans = choice();
+
+        while (true){
+            switch (ans) {
+                case "yes": {
+                    login();
+                    reserve();
+                }break;
+                case "no": {
+                    System.out.print("지역을 입력하세요. ");
+                    ans = choice();
+                    login();
+                    reserve();
+                }break;
+                default: {
+                    System.out.println("잘못 입력하셨습니다. ");
+                    ans = choice();
+                    login();
+                    reserve();
+                }break;
+            }break;
+        }
+        System.out.println("PRP프로그램이 종료됩니다.");
+    }
+
+    //loginthread.interrupt();
+
+
+    public static String choice() {
         System.out.println();
-        for(String area : PCcafe.area) {
+        for (String area : PCcafe.area) {
             System.out.println(area);
         }
 
@@ -55,71 +84,114 @@ public class PRP {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
 
-        switch (n){
-            case 1 :
-                System.out.println();
-                for(String Seoul : PCcafe.SeoulPc) {
-                    System.out.println(Seoul);
-                }
-                break;
-            case 2 :
-                System.out.println();
-                for(String Gyeonggi : PCcafe.GyeonggiPc) {
-                    System.out.println(Gyeonggi);
-                }
-                break;
-            case 3 :
-                System.out.println();
-                for(String Daejeon : PCcafe.DaejeonPc) {
-                    System.out.println(Daejeon);
-                }
-                break;
-            case 4 :
-                System.out.println();
-                for(String Chungcheong : PCcafe.ChungcheongPc) {
-                    System.out.println(Chungcheong);
-                }
-                break;
+        while (true) {
+            switch (n) {
+                case 1:
+                    System.out.println();
+                    for (String Seoul : PCcafe.SeoulPc) {
+                        System.out.println(Seoul);
+                    }
+                    break;
+                case 2:
+                    System.out.println();
+                    for (String Gyeonggi : PCcafe.GyeonggiPc) {
+                        System.out.println(Gyeonggi);
+                    }
+                    break;
+                case 3:
+                    System.out.println();
+                    for (String Daejeon : PCcafe.DaejeonPc) {
+                        System.out.println(Daejeon);
+                    }
+                    break;
+                case 4:
+                    System.out.println();
+                    for (String Chungcheong : PCcafe.ChungcheongPc) {
+                        System.out.println(Chungcheong);
+                    }
+                    break;
 
-            default:
-                System.out.println();
-                for(String Chungcheong : PCcafe.ChungcheongPc) {
-                    System.out.println(Chungcheong);
-                }
-                break;
-        }
+                default:
+                    System.out.println();
+                    for (String Chungcheong : PCcafe.ChungcheongPc) {
+                        System.out.println(Chungcheong);
+                    }
+                    break;
+            }
 
-        System.out.print("원하시는 PC방의 번호를 입력하세요.");
-        int n1 = scanner.nextInt();
-        scanner.nextLine();
-        n1 = n1-1;
+            System.out.print("원하시는 PC방의 번호를 입력하세요.");
+            int n1 = scanner.nextInt();
+            scanner.nextLine();
+            n1 = n1 - 1;
 
-        System.out.println("\n");
+            System.out.println("\n");
 
-        String savepc = PCcafe.areaPcname[n1];
-        PCcafe pCcafe = PCcafe.getPCcafe(savepc);
-
-
-        Thread loginthread = new Login();
-        System.out.print("현재 선택하신 피시방을 예약하시겠습니까?(yes/no)");
-        String ans = scanner.nextLine();
-        System.out.println("\n");
+            String savepc = PCcafe.areaPcname[n1];
+            PCcafe pCcafe = PCcafe.getPCcafe(savepc);
 
 
-        switch (ans){
-            case "yes":
-                System.out.println("로그인을 해야합니다.");
-                loginthread.start(); //로그인객체생성시실행, while문 사용
-                break;
-            case "no":
-                System.out.print("지역을 입력하세요. ");
-                break;
-            default:
-                System.out.println("잘못 입력하셨습니다. ");
+            Thread loginthread = new Login();
+            System.out.print("현재 선택하신 피시방을 예약하시겠습니까?(yes/no)");
+            String ans = scanner.nextLine();
+            System.out.println("\n");
+
+            return ans;
 
         }
-
-        //loginthread.interrupt();
-
     }
+
+    public static boolean login() {
+        while (true) {
+            System.out.println("로그인을 해야합니다.");
+            System.out.print("아이디 : ");
+            Scanner idscan = new Scanner(System.in);
+            String userid = idscan.nextLine();
+
+            System.out.print("비밀번호 : ");
+            Scanner pwscan = new Scanner(System.in);
+            String userpw = pwscan.nextLine();
+
+            if (userid.equals(User.m1.UserID) && userpw.equals(User.m1.UserPassword)) {
+                System.out.println(User.m1.Username + "회원님 로그인되었습니다.");
+                System.out.println(User.m1.Username + "회원님의 남은시간은 " + User.m1.remTime + " 입니다.");
+                break;
+            }
+        }
+        return true;
+    }
+
+    public static boolean reserve () {
+        System.out.println("\n1.예약하기\n2.시간충전\n3.다른PC방찾기\n4.다른회원으로로그인하기");
+        Scanner scan = new Scanner(System.in);
+        int num = scan.nextInt();
+        switch (num){
+            case 1 : System.out.println("예약이 완료되었습니다."); break;
+            case 2: charge (); break;
+            case 3: String ans = choice();login();reserve(); break;
+            case 4: login();reserve(); break;
+            default: System.out.println("잘못 입력하셨습니다."); break;
+        }
+        return true;
+    }
+
+    public static boolean charge () {
+        Scanner coinsc = new Scanner(System.in);
+        System.out.println("충전할 금액을 입력하세요.");
+        int coin = coinsc.nextInt();
+
+        System.out.println("이용할 충전방법을 선택하세요");
+        System.out.println("1.카카오페이\n2.토스\n3.신용카드");
+        int coincharge = coinsc.nextInt();
+        switch (coincharge){
+            case 1:
+                System.out.println(coin+"원이 결제됩니다.\n카카오페이 승인 완료되었습니다.");break;
+            case 2:
+                System.out.println(coin+"원이 결제됩니다.\n토스 승인 완료되었습니다.");break;
+            case 3:
+                System.out.println(coin+"원이 결제됩니다.\n카드 승인 완료되었습니다.");break;
+            default: System.out.println("잘못 입력하셨습니다.");break;
+        }
+        return true;
+    }
+
 }

@@ -16,6 +16,7 @@ public class PCcafe {
     //배열생성
     public static String[] area = {"1.서울","2.경기","3.충청도","4.대전","5.세종", "6.강원도", "7.경상도", "8.전라도"};
     public static String[] areaPcname = {"bob", "perpact", "newyork", "space","abc"};
+
     public static String[] SeoulPc = {"1.BOB", "2. 퍼펙트", "3.NEWYORK", "4.SPACE","5.ABC"};
     public static String[] GyeonggiPc = {"1.BOB", "2. 퍼펙트", "3.NEWYORK", "4.SPACE","5.ABC"};
     public static String[] DaejeonPc = {"1.BOB", "2. 퍼펙트", "3.NEWYORK", "4.SPACE","5.ABC"};
